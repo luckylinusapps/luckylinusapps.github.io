@@ -1,0 +1,146 @@
+/* 기본 설정 */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* 헤더 스타일 */
+.header {
+    background-color: #ffffff;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.header h1 {
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+.header p {
+    color: #666;
+}
+
+/* 앱 카드 그리드 */
+.portfolio-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 40px 20px;
+    gap: 30px;
+}
+
+/* 앱 카드 스타일 */
+.app-card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 350px; /* 카드 최대 너비 설정 */
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #e0e0e0;
+}
+
+.app-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* 앱 아이콘 */
+.app-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 22%; /* 모바일 앱 아이콘 모양 */
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.app-card h2 {
+    color: #333;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.app-description {
+    color: #555;
+    margin-bottom: 25px;
+    font-weight: 300;
+}
+
+/* 링크 스타일 */
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.store-link {    
+    /* ✅ 텍스트와 여백을 위한 최소 너비와 패딩 적용 */
+    min-width: 120px; /* 버튼의 최소 너비 설정 (텍스트가 짧아도 이 크기는 유지) */
+    padding: 10px 15px; /* 상하 10px, 좌우 15px 여백을 주어 버튼 크기를 확보 */
+    height: auto; /* 높이는 padding에 의해 결정되도록 */
+    align-items: center; /* 수직 중앙 정렬 */
+    display: flex;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    transition: background-color 0.3s;
+    background-size: contain; 
+    background-repeat: no-repeat;
+    background-position: center;
+    text-indent: -9999px;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-photo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+
+.appstore, .playstore {
+    width: 150px; 
+    height: 45px; 
+    padding: 0;
+    min-width: 150px;
+}
+
+.appstore {
+    background-image: url(img/appstore.png);
+}
+
+.playstore {
+    background-image: url(img/playstore.png);
+}
+
+.website {
+    color: black;
+    background-image: none; 
+    text-indent: 0; /* 텍스트를 보이게 함 (store-link의 -9999px 덮어쓰기) */
+    overflow: visible; /* 텍스트를 보이게 함 (store-link의 hidden 덮어쓰기) */
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #e9ecef;
+    color: #777;
+    font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+    .app-card {
+        max-width: 90%;
+    }
+}
