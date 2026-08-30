@@ -2,174 +2,236 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport"
+        content="width=device-width,
+                 initial-scale=1.0,
+                 maximum-scale=1.0,
+                 user-scalable=no">
 
   <title>한글시계</title>
 
   <style>
+
     html,
     body {
       margin: 0;
+      padding: 0;
+
       width: 100%;
       height: 100%;
+
       background: #000;
       color: #fff;
-    }
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
 
       font-family:
-        -apple-system,
-        BlinkMacSystemFont,
         "Apple SD Gothic Neo",
-        "Noto Sans KR",
-        "Malgun Gothic",
+        "Helvetica Neue",
+        Arial,
         sans-serif;
     }
 
+
+    /* 전체 시계 */
+
     #container {
+      position: absolute;
+
+      left: 0;
+      top: 50%;
+
       width: 100%;
 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      text-align: center;
+
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
     }
+
 
     /* 날짜 */
 
     #date {
-      display: flex;
-      align-items: baseline;
-      justify-content: center;
+      display: block;
+
+      width: 100%;
 
       white-space: nowrap;
-      font-size: 100px;
 
-      margin-bottom: 0.4em;
+      text-align: center;
+
+      font-size: 60px;
+
+      margin-bottom: 25px;
     }
+
+
+    /* 날짜 숫자 */
 
     .date-number {
       font-size: 1em;
-      font-weight: 700;
+
+      font-weight: bold;
+
       color: #fff;
+
+      display: inline-block;
     }
+
+
+    /* 날짜 유닛 */
 
     .date-unit {
       font-size: 0.667em;
-      font-weight: 400;
+
+      font-weight: normal;
+
       color: #bbb;
+
+      display: inline-block;
     }
+
 
     .date-space {
       margin-right: 0.5em;
     }
 
+
+
     /* 시간 */
 
     #clock {
-      display: flex;
-      align-items: baseline;
-      justify-content: center;
+      display: block;
+
+      width: 100%;
 
       white-space: nowrap;
+
+      text-align: center;
+
       font-size: 100px;
     }
 
+
+    /* 시간 숫자 */
+
     .number {
       font-size: 1em;
-      font-weight: 700;
+
+      font-weight: bold;
+
       color: #fff;
+
+      display: inline-block;
     }
+
+
+    /* 오전 오후 / 시 / 분 */
 
     .unit {
       font-size: 0.667em;
-      font-weight: 400;
+
+      font-weight: normal;
+
       color: #bbb;
+
+      display: inline-block;
     }
+
 
     .period {
       margin-right: 0.5em;
     }
 
+
     .hour-unit {
       margin-right: 0.5em;
     }
+
+
+
+    /* 설정 버튼 */
+
+    #settingsButton {
+
+      position: absolute;
+
+      top: 15px;
+      right: 15px;
+
+      width: 40px;
+      height: 40px;
+
+      padding: 0;
+
+      border: 0;
+
+      background: transparent;
+
+      color: #777;
+
+      font-size: 22px;
+
+      line-height: 40px;
+
+      text-align: center;
+
+      cursor: pointer;
+
+      -webkit-appearance: none;
+    }
+
   </style>
 </head>
 
+
 <body>
+
+
+  <!-- 설정 버튼 -->
+
+  <button id="settingsButton">
+    &#9881;
+  </button>
+
+
 
   <div id="container">
 
+
     <!-- 날짜 -->
+
     <div id="date">
+  <span id="year" class="date-number"></span><span class="date-unit date-space">년</span><span id="month" class="date-number"></span><span class="date-unit date-space">월</span><span id="day" class="date-number"></span><span class="date-unit date-space">일</span><span id="weekday" class="date-number"></span><span class="date-unit">요일</span>
+</div>
 
-      <span id="year"
-            class="date-number"></span>
-
-      <span class="date-unit date-space">
-        년
-      </span>
-
-
-      <span id="month"
-            class="date-number"></span>
-
-      <span class="date-unit date-space">
-        월
-      </span>
-
-
-      <span id="day"
-            class="date-number"></span>
-
-      <span class="date-unit date-space">
-        일
-      </span>
-
-
-      <span id="weekday"
-            class="date-number"></span>
-
-      <span class="date-unit">
-        요일
-      </span>
-
-    </div>
 
 
     <!-- 시간 -->
+
     <div id="clock">
+  <span id="period" class="unit period"></span><span id="hour" class="number"></span><span class="unit hour-unit">시</span><span id="minute" class="number"></span><span class="unit">분</span>
+</div>
 
-      <span id="period"
-            class="unit period"></span>
-
-      <span id="hour"
-            class="number"></span>
-
-      <span class="unit hour-unit">
-        시
-      </span>
-
-      <span id="minute"
-            class="number"></span>
-
-      <span class="unit">
-        분
-      </span>
-
-    </div>
 
   </div>
 
 
-  <script>
 
-    const hours = [
+  <script type="text/javascript">
+
+
+    /*
+     * iOS 5 호환을 위해
+     * const / let 사용하지 않고
+     * 모두 var 사용
+     */
+
+
+    var hours = [
+
       "열두",
       "한",
       "두",
@@ -182,10 +244,13 @@
       "아홉",
       "열",
       "열한"
+
     ];
 
 
-    const digits = [
+
+    var digits = [
+
       "",
       "일",
       "이",
@@ -196,10 +261,13 @@
       "칠",
       "팔",
       "구"
+
     ];
 
 
-    const weekdays = [
+
+    var weekdays = [
+
       "일",
       "월",
       "화",
@@ -207,235 +275,454 @@
       "목",
       "금",
       "토"
+
     ];
+
 
 
     function numberToKorean(number) {
 
+
       if (number === 0) {
+
         return "영";
+
       }
 
+
+
       if (number < 10) {
+
         return digits[number];
+
       }
+
+
 
       if (number < 100) {
 
-        const tens =
+
+        var tens =
           Math.floor(number / 10);
 
-        const ones =
+
+        var ones =
           number % 10;
 
-        let result = "";
+
+        var result = "";
+
 
         if (tens === 1) {
+
           result = "십";
-        } else {
-          result = digits[tens] + "십";
+
         }
+
+        else {
+
+          result =
+            digits[tens] + "십";
+
+        }
+
 
         if (ones > 0) {
-          result += digits[ones];
+
+          result +=
+            digits[ones];
+
         }
 
+
         return result;
+
       }
+
+
 
       if (number < 1000) {
 
-        const hundreds =
+
+        var hundreds =
           Math.floor(number / 100);
 
-        const rest =
+
+        var rest =
           number % 100;
 
-        let result = "";
+
+        var resultHundred = "";
+
 
         if (hundreds === 1) {
-          result = "백";
-        } else {
-          result = digits[hundreds] + "백";
+
+          resultHundred =
+            "백";
+
         }
+
+        else {
+
+          resultHundred =
+            digits[hundreds] + "백";
+
+        }
+
 
         if (rest > 0) {
-          result += numberToKorean(rest);
+
+          resultHundred +=
+            numberToKorean(rest);
+
         }
 
-        return result;
+
+        return resultHundred;
+
       }
+
+
 
       if (number < 10000) {
 
-        const thousands =
+
+        var thousands =
           Math.floor(number / 1000);
 
-        const rest =
+
+        var remainder =
           number % 1000;
 
-        let result = "";
+
+        var resultThousand = "";
+
 
         if (thousands === 1) {
-          result = "천";
-        } else {
-          result = digits[thousands] + "천";
+
+          resultThousand =
+            "천";
+
         }
 
-        if (rest > 0) {
-          result += numberToKorean(rest);
+        else {
+
+          resultThousand =
+            digits[thousands] + "천";
+
         }
 
-        return result;
+
+        if (remainder > 0) {
+
+          resultThousand +=
+            numberToKorean(remainder);
+
+        }
+
+
+        return resultThousand;
+
       }
 
+
+      return "";
+
     }
+
+
+
+    /*
+     * 글자 크기를 화면 너비에 맞춤
+     */
+
+
+    function fitElement(
+      elementId,
+      targetRatio,
+      baseSize
+    ) {
+
+
+      var element =
+        document.getElementById(elementId);
+
+
+      element.style.fontSize =
+        baseSize + "px";
+
+
+      /*
+       * offsetWidth가 구형 Safari에서
+       * scrollWidth보다 안정적
+       */
+
+      var currentWidth =
+        element.offsetWidth;
+
+
+      /*
+       * 부모 width 100% 때문에
+       * offsetWidth가 화면 전체가 될 수 있으므로
+       * 실제 내용 너비를 측정할 span 방식 사용
+       */
+
+      var test =
+        document.createElement("span");
+
+
+      test.style.position =
+        "absolute";
+
+
+      test.style.visibility =
+        "hidden";
+
+
+      test.style.whiteSpace =
+        "nowrap";
+
+
+      test.style.fontSize =
+        baseSize + "px";
+
+
+      test.style.fontFamily =
+        element.style.fontFamily;
+
+
+      test.innerHTML =
+        element.innerHTML;
+
+
+      document.body.appendChild(test);
+
+
+      var textWidth =
+        test.offsetWidth;
+
+
+      document.body.removeChild(test);
+
+
+      if (textWidth <= 0) {
+
+        return;
+
+      }
+
+
+      var targetWidth =
+        document.documentElement.clientWidth *
+        targetRatio;
+
+
+      var newSize =
+        baseSize *
+        (targetWidth / textWidth);
+
+
+      element.style.fontSize =
+        newSize + "px";
+
+    }
+
 
 
     function fitClock() {
 
-      const clock =
-        document.getElementById("clock");
+      fitElement(
+        "clock",
+        0.90,
+        100
+      );
 
-      clock.style.fontSize =
-        "200px";
-
-      const targetWidth =
-        window.innerWidth * 0.90;
-
-      const currentWidth =
-        clock.scrollWidth;
-
-      const newSize =
-        200 *
-        (targetWidth / currentWidth);
-
-      clock.style.fontSize =
-        newSize + "px";
     }
+
 
 
     function fitDate() {
 
-      const date =
-        document.getElementById("date");
+      fitElement(
+        "date",
+        0.80,
+        60
+      );
 
-      date.style.fontSize =
-        "100px";
-
-      const targetWidth =
-        window.innerWidth * 0.80;
-
-      const currentWidth =
-        date.scrollWidth;
-
-      const newSize =
-        100 *
-        (targetWidth / currentWidth);
-
-      date.style.fontSize =
-        newSize + "px";
     }
+
 
 
     function updateClock() {
 
-      const now =
+
+      var now =
         new Date();
+
 
 
       /* 날짜 */
 
-      const year =
+
+      var year =
         now.getFullYear();
 
-      const month =
+
+      var month =
         now.getMonth() + 1;
 
-      const day =
+
+      var day =
         now.getDate();
 
-      const weekday =
+
+      var weekday =
         weekdays[now.getDay()];
+
 
 
       document
         .getElementById("year")
-        .textContent =
+        .innerHTML =
         numberToKorean(year);
+
 
 
       document
         .getElementById("month")
-        .textContent =
+        .innerHTML =
         numberToKorean(month);
+
 
 
       document
         .getElementById("day")
-        .textContent =
+        .innerHTML =
         numberToKorean(day);
+
 
 
       document
         .getElementById("weekday")
-        .textContent =
+        .innerHTML =
         weekday;
+
 
 
       /* 시간 */
 
-      const hour24 =
+
+      var hour24 =
         now.getHours();
 
-      const hour =
+
+      var hour =
         hour24 % 12;
 
-      const minute =
+
+      var minute =
         now.getMinutes();
 
-      const period =
-        hour24 < 12
-          ? "오전"
-          : "오후";
+
+      var period;
+
+
+      if (hour24 < 12) {
+
+        period = "오전";
+
+      }
+
+      else {
+
+        period = "오후";
+
+      }
+
 
 
       document
         .getElementById("period")
-        .textContent =
+        .innerHTML =
         period;
+
 
 
       document
         .getElementById("hour")
-        .textContent =
+        .innerHTML =
         hours[hour];
+
 
 
       document
         .getElementById("minute")
-        .textContent =
+        .innerHTML =
         numberToKorean(minute);
 
 
+
       fitDate();
+
       fitClock();
+
     }
 
 
+
+    /*
+     * 처음 실행
+     */
+
     updateClock();
 
-    setInterval(
+
+
+    /*
+     * 30초마다 갱신
+     *
+     * 초를 표시하지 않으므로
+     * 매초 실행할 필요 없음
+     */
+
+    window.setInterval(
       updateClock,
-      1000
+      30000
     );
 
-    window.addEventListener(
-      "resize",
-      updateClock
-    );
+
+
+    /*
+     * 화면 회전 대응
+     */
+
+    window.onresize =
+      function() {
+
+        fitDate();
+        fitClock();
+
+      };
+
+
+    window.onorientationchange =
+      function() {
+
+        window.setTimeout(
+          function() {
+
+            fitDate();
+            fitClock();
+
+          },
+          300
+        );
+
+      };
+
 
   </script>
+
 
 </body>
 </html>
