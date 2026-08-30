@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>한글시계</title>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      color: #fff;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Apple SD Gothic Neo",
+        "Noto Sans KR",
+        "Malgun Gothic",
+        sans-serif;
+    }
+
+    #container {
+      width: 100%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 날짜 */
+
+    #date {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+
+      white-space: nowrap;
+      font-size: 100px;
+
+      margin-bottom: 0.4em;
+    }
+
+    .date-number {
+      font-size: 1em;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .date-unit {
+      font-size: 0.667em;
+      font-weight: 400;
+      color: #bbb;
+    }
+
+    .date-space {
+      margin-right: 0.5em;
+    }
+
+    /* 시간 */
+
+    #clock {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+
+      white-space: nowrap;
+      font-size: 100px;
+    }
+
+    .number {
+      font-size: 1em;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .unit {
+      font-size: 0.667em;
+      font-weight: 400;
+      color: #bbb;
+    }
+
+    .period {
+      margin-right: 0.5em;
+    }
+
+    .hour-unit {
+      margin-right: 0.5em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="container">
+
+    <!-- 날짜 -->
+    <div id="date">
+
+      <span id="year"
+            class="date-number"></span>
+
+      <span class="date-unit date-space">
+        년
+      </span>
+
+
+      <span id="month"
+            class="date-number"></span>
+
+      <span class="date-unit date-space">
+        월
+      </span>
+
+
+      <span id="day"
+            class="date-number"></span>
+
+      <span class="date-unit date-space">
+        일
+      </span>
+
+
+      <span id="weekday"
+            class="date-number"></span>
+
+      <span class="date-unit">
+        요일
+      </span>
+
+    </div>
+
+
+    <!-- 시간 -->
+    <div id="clock">
+
+      <span id="period"
+            class="unit period"></span>
+
+      <span id="hour"
+            class="number"></span>
+
+      <span class="unit hour-unit">
+        시
+      </span>
+
+      <span id="minute"
+            class="number"></span>
+
+      <span class="unit">
+        분
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const hours = [
+      "열두",
+      "한",
+      "두",
+      "세",
+      "네",
+      "다섯",
+      "여섯",
+      "일곱",
+      "여덟",
+      "아홉",
+      "열",
+      "열한"
+    ];
+
+
+    const digits = [
+      "",
+      "일",
+      "이",
+      "삼",
+      "사",
+      "오",
+      "육",
+      "칠",
+      "팔",
+      "구"
+    ];
+
+
+    const weekdays = [
+      "일",
+      "월",
+      "화",
+      "수",
+      "목",
+      "금",
+      "토"
+    ];
+
+
+    function numberToKorean(number) {
+
+      if (number === 0) {
+        return "영";
+      }
+
+      if (number < 10) {
+        return digits[number];
+      }
+
+      if (number < 100) {
+
+        const tens =
+          Math.floor(number / 10);
+
+        const ones =
+          number % 10;
+
+        let result = "";
+
+        if (tens === 1) {
+          result = "십";
+        } else {
+          result = digits[tens] + "십";
+        }
+
+        if (ones > 0) {
+          result += digits[ones];
+        }
+
+        return result;
+      }
+
+      if (number < 1000) {
+
+        const hundreds =
+          Math.floor(number / 100);
+
+        const rest =
+          number % 100;
+
+        let result = "";
+
+        if (hundreds === 1) {
+          result = "백";
+        } else {
+          result = digits[hundreds] + "백";
+        }
+
+        if (rest > 0) {
+          result += numberToKorean(rest);
+        }
+
+        return result;
+      }
+
+      if (number < 10000) {
+
+        const thousands =
+          Math.floor(number / 1000);
+
+        const rest =
+          number % 1000;
+
+        let result = "";
+
+        if (thousands === 1) {
+          result = "천";
+        } else {
+          result = digits[thousands] + "천";
+        }
+
+        if (rest > 0) {
+          result += numberToKorean(rest);
+        }
+
+        return result;
+      }
+
+    }
+
+
+    function fitClock() {
+
+      const clock =
+        document.getElementById("clock");
+
+      clock.style.fontSize =
+        "200px";
+
+      const targetWidth =
+        window.innerWidth * 0.90;
+
+      const currentWidth =
+        clock.scrollWidth;
+
+      const newSize =
+        200 *
+        (targetWidth / currentWidth);
+
+      clock.style.fontSize =
+        newSize + "px";
+    }
+
+
+    function fitDate() {
+
+      const date =
+        document.getElementById("date");
+
+      date.style.fontSize =
+        "100px";
+
+      const targetWidth =
+        window.innerWidth * 0.80;
+
+      const currentWidth =
+        date.scrollWidth;
+
+      const newSize =
+        100 *
+        (targetWidth / currentWidth);
+
+      date.style.fontSize =
+        newSize + "px";
+    }
+
+
+    function updateClock() {
+
+      const now =
+        new Date();
+
+
+      /* 날짜 */
+
+      const year =
+        now.getFullYear();
+
+      const month =
+        now.getMonth() + 1;
+
+      const day =
+        now.getDate();
+
+      const weekday =
+        weekdays[now.getDay()];
+
+
+      document
+        .getElementById("year")
+        .textContent =
+        numberToKorean(year);
+
+
+      document
+        .getElementById("month")
+        .textContent =
+        numberToKorean(month);
+
+
+      document
+        .getElementById("day")
+        .textContent =
+        numberToKorean(day);
+
+
+      document
+        .getElementById("weekday")
+        .textContent =
+        weekday;
+
+
+      /* 시간 */
+
+      const hour24 =
+        now.getHours();
+
+      const hour =
+        hour24 % 12;
+
+      const minute =
+        now.getMinutes();
+
+      const period =
+        hour24 < 12
+          ? "오전"
+          : "오후";
+
+
+      document
+        .getElementById("period")
+        .textContent =
+        period;
+
+
+      document
+        .getElementById("hour")
+        .textContent =
+        hours[hour];
+
+
+      document
+        .getElementById("minute")
+        .textContent =
+        numberToKorean(minute);
+
+
+      fitDate();
+      fitClock();
+    }
+
+
+    updateClock();
+
+    setInterval(
+      updateClock,
+      1000
+    );
+
+    window.addEventListener(
+      "resize",
+      updateClock
+    );
+
+  </script>
+
+</body>
+</html>
