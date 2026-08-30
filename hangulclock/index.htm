@@ -2,21 +2,28 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="한글시계">
 
   <meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no">
+        content="width=device-width,
+                 initial-scale=1.0,
+                 maximum-scale=1.0,
+                 user-scalable=no">
 
+  <!-- 홈 화면 웹앱 -->
+  <meta name="apple-mobile-web-app-capable"
+        content="yes">
 
-               <title>Korean Hangul Word Clock - 한글 시계</title>
+  <meta name="apple-mobile-web-app-status-bar-style"
+        content="black">
 
-<meta name="description"
-      content="A simple Korean Hangul word clock that displays the current date and time in Korean words.">
+  <meta name="apple-mobile-web-app-title"
+        content="한글시계">
+
+  <!-- SEO -->
+  <title>Korean Hangul Word Clock - 한글 시계</title>
+
+  <meta name="description"
+        content="A simple Korean Hangul word clock that displays the current date and time in Korean words.">
 
   <style>
 
@@ -41,7 +48,9 @@
     }
 
 
-    /* 전체 시계 */
+    /*
+     * 전체 시계
+     */
 
     #container {
       position: absolute;
@@ -58,7 +67,9 @@
     }
 
 
-    /* 날짜 */
+    /*
+     * 날짜
+     */
 
     #date {
       display: block;
@@ -75,8 +86,6 @@
     }
 
 
-    /* 날짜 숫자 */
-
     .date-number {
       font-size: 1em;
 
@@ -88,14 +97,12 @@
     }
 
 
-    /* 날짜 유닛 */
-
     .date-unit {
       font-size: 0.667em;
 
       font-weight: normal;
 
-      color: #bbb;
+      color: #999;
 
       display: inline-block;
     }
@@ -107,7 +114,9 @@
 
 
 
-    /* 시간 */
+    /*
+     * 시간
+     */
 
     #clock {
       display: block;
@@ -122,8 +131,6 @@
     }
 
 
-    /* 시간 숫자 */
-
     .number {
       font-size: 1em;
 
@@ -135,14 +142,12 @@
     }
 
 
-    /* 오전 오후 / 시 / 분 */
-
     .unit {
       font-size: 0.667em;
 
       font-weight: normal;
 
-      color: #bbb;
+      color: #999;
 
       display: inline-block;
     }
@@ -159,17 +164,18 @@
 
 
 
-    /* 설정 버튼 */
+    /*
+     * 설정 버튼
+     */
 
     #settingsButton {
-
       position: absolute;
 
-      top: 15px;
-      right: 15px;
+      top: 12px;
+      right: 12px;
 
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
 
       padding: 0;
 
@@ -179,53 +185,265 @@
 
       color: #777;
 
-      font-size: 22px;
+      font-size: 23px;
 
-      line-height: 40px;
+      line-height: 42px;
 
       text-align: center;
 
       cursor: pointer;
 
+      z-index: 20;
+
       -webkit-appearance: none;
     }
 
-    .seo-title {
-  position: absolute;
-  left: -9999px;
-}
+
+
+    /*
+     * 설정창
+     */
+
+    #settingsPanel {
+      display: none;
+
+      position: absolute;
+
+      top: 12px;
+      right: 12px;
+
+      width: 220px;
+
+      padding: 18px;
+
+      background: #222;
+
+      color: #fff;
+
+      border: 1px solid #444;
+
+      z-index: 30;
+
+      font-size: 16px;
+
+      text-align: left;
+    }
+
+
+    #settingsTitle {
+      font-size: 18px;
+      font-weight: bold;
+
+      margin-bottom: 18px;
+    }
+
+
+    .settingRow {
+      margin-bottom: 18px;
+    }
+
+
+    .settingLabel {
+      display: inline-block;
+
+      width: 155px;
+    }
+
+
+    /*
+     * iOS 5에서도 기본 체크박스 사용
+     */
+
+    .settingCheckbox {
+      width: 18px;
+      height: 18px;
+
+      vertical-align: middle;
+    }
+
+
+    /*
+     * 모드 버튼
+     */
+
+    .modeButton {
+      border: 1px solid #666;
+
+      background: transparent;
+
+      color: #fff;
+
+      padding: 7px 11px;
+
+      margin-right: 4px;
+
+      font-size: 14px;
+
+      -webkit-appearance: none;
+    }
+
+
+    #closeSettings {
+      width: 100%;
+
+      margin-top: 5px;
+
+      padding: 9px 0;
+
+      border: 1px solid #666;
+
+      background: transparent;
+
+      color: #fff;
+
+      font-size: 14px;
+
+      -webkit-appearance: none;
+    }
+
+
+    /*
+     * Light mode
+     */
+
+    body.lightMode {
+      background: #fff;
+      color: #000;
+    }
+
+
+    body.lightMode .number,
+    body.lightMode .date-number {
+      color: #000;
+    }
+
+
+    body.lightMode .unit,
+    body.lightMode .date-unit {
+      color: #777;
+    }
+
+
+    body.lightMode #settingsButton {
+      color: #888;
+    }
+
+
+    body.lightMode #settingsPanel {
+      background: #f1f1f1;
+
+      color: #000;
+
+      border-color: #ccc;
+    }
+
+
+    body.lightMode .modeButton,
+    body.lightMode #closeSettings {
+      color: #000;
+
+      border-color: #aaa;
+    }
 
   </style>
 </head>
 
 
 <body>
-<h1 class="seo-title">Korean Hangul Word Clock - 한글 시계</h1>
+
 
   <!-- 설정 버튼 -->
 
-  <button id="settingsButton">
+  <button id="settingsButton"
+          onclick="openSettings();">
     &#9881;
   </button>
 
 
+
+  <!-- 설정창 -->
+
+  <div id="settingsPanel">
+
+
+    <div id="settingsTitle">
+      설정
+    </div>
+
+
+    <div class="settingRow">
+
+      <span class="settingLabel">
+        날짜 표시
+      </span>
+
+      <input type="checkbox"
+             id="dateToggle"
+             class="settingCheckbox"
+             checked="checked"
+             onclick="changeDateSetting();">
+
+    </div>
+
+
+    <div class="settingRow">
+
+      <span class="settingLabel">
+        오전/오후 표시
+      </span>
+
+      <input type="checkbox"
+             id="periodToggle"
+             class="settingCheckbox"
+             checked="checked"
+             onclick="changePeriodSetting();">
+
+    </div>
+
+
+    <div class="settingRow">
+
+      <div style="margin-bottom:10px;">
+        화면 모드
+      </div>
+
+      <button class="modeButton"
+              onclick="setDarkMode();">
+        다크
+      </button>
+
+      <button class="modeButton"
+              onclick="setLightMode();">
+        라이트
+      </button>
+
+    </div>
+
+
+    <button id="closeSettings"
+            onclick="closeSettings();">
+      닫기
+    </button>
+
+
+  </div>
+
+
+
+  <!-- 시계 -->
 
   <div id="container">
 
 
     <!-- 날짜 -->
 
-    <div id="date">
-  <span id="year" class="date-number"></span><span class="date-unit date-space">년</span><span id="month" class="date-number"></span><span class="date-unit date-space">월</span><span id="day" class="date-number"></span><span class="date-unit date-space">일</span><span id="weekday" class="date-number"></span><span class="date-unit">요일</span>
-</div>
+    <div id="date"><span id="year" class="date-number"></span><span class="date-unit date-space">년</span><span id="month" class="date-number"></span><span class="date-unit date-space">월</span><span id="day" class="date-number"></span><span class="date-unit date-space">일</span><span id="weekday" class="date-number"></span><span class="date-unit">요일</span></div>
 
 
 
     <!-- 시간 -->
 
-    <div id="clock">
-  <span id="period" class="unit period"></span><span id="hour" class="number"></span><span class="unit hour-unit">시</span><span id="minute" class="number"></span><span class="unit">분</span>
-</div>
+    <div id="clock"><span id="period" class="unit period"></span><span id="hour" class="number"></span><span class="unit hour-unit">시</span><span id="minute" class="number"></span><span class="unit">분</span></div>
 
 
   </div>
@@ -237,13 +455,11 @@
 
     /*
      * iOS 5 호환을 위해
-     * const / let 사용하지 않고
-     * 모두 var 사용
+     * const / let 대신 var 사용
      */
 
 
     var hours = [
-
       "열두",
       "한",
       "두",
@@ -256,13 +472,10 @@
       "아홉",
       "열",
       "열한"
-
     ];
 
 
-
     var digits = [
-
       "",
       "일",
       "이",
@@ -273,13 +486,10 @@
       "칠",
       "팔",
       "구"
-
     ];
 
 
-
     var weekdays = [
-
       "일",
       "월",
       "화",
@@ -287,7 +497,6 @@
       "목",
       "금",
       "토"
-
     ];
 
 
@@ -296,19 +505,13 @@
 
 
       if (number === 0) {
-
         return "영";
-
       }
-
 
 
       if (number < 10) {
-
         return digits[number];
-
       }
-
 
 
       if (number < 100) {
@@ -326,31 +529,23 @@
 
 
         if (tens === 1) {
-
           result = "십";
-
         }
-
         else {
-
           result =
             digits[tens] + "십";
-
         }
 
 
         if (ones > 0) {
-
           result +=
             digits[ones];
-
         }
 
 
         return result;
 
       }
-
 
 
       if (number < 1000) {
@@ -368,32 +563,23 @@
 
 
         if (hundreds === 1) {
-
-          resultHundred =
-            "백";
-
+          resultHundred = "백";
         }
-
         else {
-
           resultHundred =
             digits[hundreds] + "백";
-
         }
 
 
         if (rest > 0) {
-
           resultHundred +=
             numberToKorean(rest);
-
         }
 
 
         return resultHundred;
 
       }
-
 
 
       if (number < 10000) {
@@ -411,25 +597,17 @@
 
 
         if (thousands === 1) {
-
-          resultThousand =
-            "천";
-
+          resultThousand = "천";
         }
-
         else {
-
           resultThousand =
             digits[thousands] + "천";
-
         }
 
 
         if (remainder > 0) {
-
           resultThousand +=
             numberToKorean(remainder);
-
         }
 
 
@@ -445,9 +623,8 @@
 
 
     /*
-     * 글자 크기를 화면 너비에 맞춤
+     * 화면 너비에 맞게 글자 크기 조절
      */
-
 
     function fitElement(
       elementId,
@@ -463,21 +640,6 @@
       element.style.fontSize =
         baseSize + "px";
 
-
-      /*
-       * offsetWidth가 구형 Safari에서
-       * scrollWidth보다 안정적
-       */
-
-      var currentWidth =
-        element.offsetWidth;
-
-
-      /*
-       * 부모 width 100% 때문에
-       * offsetWidth가 화면 전체가 될 수 있으므로
-       * 실제 내용 너비를 측정할 span 방식 사용
-       */
 
       var test =
         document.createElement("span");
@@ -499,10 +661,6 @@
         baseSize + "px";
 
 
-      test.style.fontFamily =
-        element.style.fontFamily;
-
-
       test.innerHTML =
         element.innerHTML;
 
@@ -518,9 +676,7 @@
 
 
       if (textWidth <= 0) {
-
         return;
-
       }
 
 
@@ -552,28 +708,35 @@
     }
 
 
-
     function fitDate() {
 
-      fitElement(
-        "date",
-        0.80,
-        60
-      );
+
+      if (
+        document.getElementById("date").style.display
+        !== "none"
+      ) {
+
+        fitElement(
+          "date",
+          0.80,
+          60
+        );
+
+      }
 
     }
 
 
+
+    /*
+     * 현재 날짜와 시간
+     */
 
     function updateClock() {
 
 
       var now =
         new Date();
-
-
-
-      /* 날짜 */
 
 
       var year =
@@ -592,36 +755,21 @@
         weekdays[now.getDay()];
 
 
-
-      document
-        .getElementById("year")
-        .innerHTML =
+      document.getElementById("year").innerHTML =
         numberToKorean(year);
 
 
-
-      document
-        .getElementById("month")
-        .innerHTML =
+      document.getElementById("month").innerHTML =
         numberToKorean(month);
 
 
-
-      document
-        .getElementById("day")
-        .innerHTML =
+      document.getElementById("day").innerHTML =
         numberToKorean(day);
 
 
-
-      document
-        .getElementById("weekday")
-        .innerHTML =
+      document.getElementById("weekday").innerHTML =
         weekday;
 
-
-
-      /* 시간 */
 
 
       var hour24 =
@@ -640,38 +788,23 @@
 
 
       if (hour24 < 12) {
-
         period = "오전";
-
       }
-
       else {
-
         period = "오후";
-
       }
 
 
-
-      document
-        .getElementById("period")
-        .innerHTML =
+      document.getElementById("period").innerHTML =
         period;
 
 
-
-      document
-        .getElementById("hour")
-        .innerHTML =
+      document.getElementById("hour").innerHTML =
         hours[hour];
 
 
-
-      document
-        .getElementById("minute")
-        .innerHTML =
+      document.getElementById("minute").innerHTML =
         numberToKorean(minute);
-
 
 
       fitDate();
@@ -683,7 +816,143 @@
 
 
     /*
-     * 처음 실행
+     * 설정창
+     */
+
+    function openSettings() {
+
+      document.getElementById(
+        "settingsPanel"
+      ).style.display = "block";
+
+
+      document.getElementById(
+        "settingsButton"
+      ).style.display = "none";
+
+    }
+
+
+    function closeSettings() {
+
+      document.getElementById(
+        "settingsPanel"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "settingsButton"
+      ).style.display = "block";
+
+    }
+
+
+
+    /*
+     * 날짜 표시 / 숨기기
+     */
+
+    function changeDateSetting() {
+
+
+      var checkbox =
+        document.getElementById(
+          "dateToggle"
+        );
+
+
+      var date =
+        document.getElementById(
+          "date"
+        );
+
+
+      if (checkbox.checked) {
+
+        date.style.display =
+          "block";
+
+      }
+      else {
+
+        date.style.display =
+          "none";
+
+      }
+
+
+      fitClock();
+
+    }
+
+
+
+    /*
+     * 오전 / 오후 표시
+     */
+
+    function changePeriodSetting() {
+
+
+      var checkbox =
+        document.getElementById(
+          "periodToggle"
+        );
+
+
+      var period =
+        document.getElementById(
+          "period"
+        );
+
+
+      if (checkbox.checked) {
+
+        period.style.display =
+          "inline-block";
+
+      }
+      else {
+
+        period.style.display =
+          "none";
+
+      }
+
+
+      fitClock();
+
+    }
+
+
+
+    /*
+     * 다크 모드
+     */
+
+    function setDarkMode() {
+
+      document.body.className = "";
+
+    }
+
+
+
+    /*
+     * 라이트 모드
+     */
+
+    function setLightMode() {
+
+      document.body.className =
+        "lightMode";
+
+    }
+
+
+
+    /*
+     * 실행
      */
 
     updateClock();
@@ -691,10 +960,7 @@
 
 
     /*
-     * 30초마다 갱신
-     *
-     * 초를 표시하지 않으므로
-     * 매초 실행할 필요 없음
+     * 30초마다 업데이트
      */
 
     window.setInterval(
@@ -705,7 +971,7 @@
 
 
     /*
-     * 화면 회전 대응
+     * 화면 회전
      */
 
     window.onresize =
