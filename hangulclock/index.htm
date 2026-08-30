@@ -431,8 +431,8 @@
     <!-- 시간 -->
 
     <div id="clock"><span id="period" class="unit period"></span><span id="hour" class="number"></span><span
-        class="unit hour-unit">시</span><span id="minuteGroup"><span id="minute" class="number"></span><span
-          class="unit">분</span></span></div>
+        id="hourUnit" class="unit hour-unit">시</span><span id="minuteGroup"><span id="minute"
+          class="number"></span><span class="unit">분</span></span></div>
 
 
   </div>
@@ -793,15 +793,25 @@
 
 
       if (minute === 0) {
+
         document.getElementById("minuteGroup").style.display =
           "none";
+
+        document.getElementById("hourUnit").style.marginRight =
+          "0";
+
       }
       else {
+
         document.getElementById("minuteGroup").style.display =
           "inline";
 
+        document.getElementById("hourUnit").style.marginRight =
+          "0.5em";
+
         document.getElementById("minute").innerHTML =
           numberToKorean(minute);
+
       }
 
       fitDate();
